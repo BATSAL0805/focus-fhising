@@ -236,21 +236,25 @@
   el('btnMinus').addEventListener('click', () => {
     ui.durationMin = Math.max(5, ui.durationMin - 5);
     updateDialUi();
+    Sound.play('ui');
   });
   el('btnPlus').addEventListener('click', () => {
     ui.durationMin = Math.min(90, ui.durationMin + 5);
     updateDialUi();
+    Sound.play('ui');
   });
   document.querySelectorAll('.preset-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       ui.durationMin = Number(chip.dataset.preset);
       updateDialUi();
+      Sound.play('ui');
     });
   });
   document.querySelectorAll('.bait-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       ui.selectedBait = chip.dataset.bait;
       updateBaitUi();
+      Sound.play('ui');
     });
   });
 
@@ -260,6 +264,7 @@
       if (target === 'collection') renderCollection();
       if (target === 'stats') renderStats();
       showScreen(target);
+      Sound.play('ui');
     });
   });
 
@@ -327,11 +332,13 @@
     else focusCountdown.pause();
     el('btnPause').dataset.paused = (!paused).toString();
     setPauseIcon(!paused);
+    Sound.play('ui');
   });
 
   el('btnStop').addEventListener('click', abortFishing);
 
   function abortFishing() {
+    Sound.stop('ambient');
     if (focusCountdown) {
       focusCountdown.stop();
       focusCountdown = null;
@@ -350,6 +357,7 @@
   /* 3. 입질 / 챔질                                                 */
   /* ---------------------------------------------------------- */
   function onFocusComplete() {
+    Sound.stop('ambient');
     Sound.play('bite');
     sessionCtx.biteAttempt = 0;
     showScreen('bite');
@@ -410,7 +418,10 @@
     showScreen('missed');
   }
 
-  el('btnMissedBack').addEventListener('click', () => showScreen('start'));
+  el('btnMissedBack').addEventListener('click', () => {
+    showScreen('start');
+    Sound.play('ui');
+  });
 
   /* ---------------------------------------------------------- */
   /* 4. 릴링                                                        */
@@ -432,10 +443,12 @@
 
     const pulse = () => {
       if (!reelState || reelState.locked) return;
+      Sound.play('reel');
       reelState.progress = Math.min(100, reelState.progress + 6 + Math.random() * 4);
       reelState.tension = Math.min(100, reelState.tension + 8 + Math.random() * 6);
       if (reelState.tension >= 96) {
         reelState.locked = true;
+        Sound.play('warn');
         el('reelingWarning').classList.add('is-visible');
         setTimeout(() => {
           if (reelState) {
@@ -524,8 +537,12 @@
   el('btnGoCollection').addEventListener('click', () => {
     renderCollection();
     showScreen('collection');
+    Sound.play('ui');
   });
-  el('btnFishAgain').addEventListener('click', () => showScreen('start'));
+  el('btnFishAgain').addEventListener('click', () => {
+    showScreen('start');
+    Sound.play('ui');
+  });
 
   /* ---------------------------------------------------------- */
   /* 6. 도감 화면                                                    */
@@ -535,6 +552,7 @@
       collectionFilter = chip.dataset.filter;
       document.querySelectorAll('#filterRow .filter-chip').forEach(c => c.classList.toggle('is-active', c === chip));
       renderCollection();
+      Sound.play('ui');
     });
   });
 
@@ -640,6 +658,7 @@
     }
 
     if (currentScreen === 'focus') {
+      Sound.stop('ambient');
       if (focusCountdown) {
         focusCountdown.stop();
         focusCountdown = null;
