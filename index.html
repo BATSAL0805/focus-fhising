@@ -24,25 +24,44 @@
       <div class="start-header">
         <div class="brand-title">손맛</div>
         <div class="brand-sub">집중으로 낚는 손맛</div>
+        <div class="today-focus-chip" id="todayFocusChip">총 집중시간 00:00</div>
       </div>
 
-      <div class="dial">
-        <svg width="220" height="220" viewBox="0 0 220 220" class="dial-track">
-          <circle cx="110" cy="110" r="96" fill="rgba(255,255,255,0.05)" stroke="#6fb3ad" stroke-width="2" stroke-dasharray="3 9"></circle>
-          <circle id="dialProgress" cx="110" cy="110" r="96" fill="none" stroke="#e08a3c" stroke-width="5" stroke-dasharray="0 604" stroke-linecap="round" transform="rotate(-90 110 110)"></circle>
-        </svg>
-        <div class="dial-value">
-          <div class="dial-num" id="durationValue">25</div>
-          <div class="dial-unit">분</div>
+      <div class="mode-row" id="modeRow">
+        <button class="mode-chip is-active" data-mode="timer">타이머</button>
+        <button class="mode-chip" data-mode="stopwatch">스톱워치</button>
+      </div>
+
+      <div id="timerModeGroup">
+        <div class="dial">
+          <svg width="220" height="220" viewBox="0 0 220 220" class="dial-track">
+            <circle cx="110" cy="110" r="96" fill="rgba(255,255,255,0.05)" stroke="#6fb3ad" stroke-width="2" stroke-dasharray="3 9"></circle>
+            <circle id="dialProgress" cx="110" cy="110" r="96" fill="none" stroke="#e08a3c" stroke-width="5" stroke-dasharray="0 604" stroke-linecap="round" transform="rotate(-90 110 110)"></circle>
+          </svg>
+          <div class="dial-value">
+            <div class="dial-num" id="durationValue">25</div>
+            <div class="dial-unit">분</div>
+          </div>
+          <button class="dial-btn dial-btn--minus" id="btnMinus" aria-label="시간 줄이기">–</button>
+          <button class="dial-btn dial-btn--plus" id="btnPlus" aria-label="시간 늘리기">+</button>
         </div>
-        <button class="dial-btn dial-btn--minus" id="btnMinus" aria-label="시간 줄이기">–</button>
-        <button class="dial-btn dial-btn--plus" id="btnPlus" aria-label="시간 늘리기">+</button>
+
+        <div class="preset-row" id="presetRow">
+          <button class="preset-chip" data-preset="15">15분</button>
+          <button class="preset-chip" data-preset="25">25분</button>
+          <button class="preset-chip" data-preset="45">45분</button>
+        </div>
       </div>
 
-      <div class="preset-row" id="presetRow">
-        <button class="preset-chip" data-preset="15">15분</button>
-        <button class="preset-chip" data-preset="25">25분</button>
-        <button class="preset-chip" data-preset="45">45분</button>
+      <div class="stopwatch-panel" id="stopwatchModeGroup">
+        <svg width="86" height="86" viewBox="0 0 24 24" fill="none" stroke="#e08a3c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="13" r="8"></circle>
+          <path d="M12 9v4l3 2"></path>
+          <path d="M9 2h6"></path>
+          <path d="M12 2v3"></path>
+        </svg>
+        <div class="stopwatch-caption">0부터 자유롭게 집중해요</div>
+        <div class="stopwatch-subcaption">준비되면 직접 챔질하러 가면 돼요</div>
       </div>
 
       <div class="bait-row" id="baitRow">
@@ -109,9 +128,16 @@
 
       <div class="focus-timer-wrap">
         <div class="focus-timer" id="focusTimer">25:00</div>
-        <div class="focus-progress">
+        <div class="focus-progress" id="focusProgressBar">
           <div class="focus-progress-fill" id="focusProgressFill"></div>
         </div>
+      </div>
+
+      <div class="focus-finish-wrap" id="focusFinishWrap">
+        <button class="btn-finish-sw" id="btnFinishStopwatch">
+          <svg width="15" height="15" viewBox="0 0 18 22" fill="none" stroke="#fbf3e7" stroke-width="2" stroke-linecap="round"><path d="M9 1v13a4 4 0 0 0 8 0"></path></svg>
+          챔질하러 가기
+        </button>
       </div>
 
       <div class="focus-controls">
@@ -139,6 +165,11 @@
       <div class="bite-header">
         <div class="bite-title">입질이다!</div>
         <div class="bite-sub" id="biteSub">찌가 물속으로 빨려 들어가요</div>
+      </div>
+
+      <div class="bite-splash">
+        <div class="bite-splash-ring"></div>
+        <div class="bite-splash-ring bite-splash-ring--delay"></div>
       </div>
 
       <div class="rod-tilt">
@@ -316,7 +347,11 @@
         <div class="page-sub">꾸준한 손맛의 기록</div>
       </div>
 
-      <div class="stats-top-row">
+      <div class="stats-top-row stats-top-row--triple">
+        <div class="stats-card">
+          <div class="stats-card-label">오늘 집중 시간</div>
+          <div class="stats-card-value" id="statTodayFocus">0시간 0분</div>
+        </div>
         <div class="stats-card">
           <div class="stats-card-label">총 집중 시간</div>
           <div class="stats-card-value" id="statTotalFocus">0시간 0분</div>

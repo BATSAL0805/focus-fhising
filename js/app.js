@@ -48,6 +48,52 @@
     stop() {
       clearTimeout(this.timerId);
     }
+    getElapsedMs() {
+      const remaining = this.isPaused ? this.endTime - this.pauseStart : this.endTime - Date.now();
+      return Math.max(0, this.durationMs - Math.max(0, remaining));
+    }
+  }
+
+  /* ---------------------------------------------------------- */
+  /* 카운트업 스톱워치 (Countdown과 동일한 pause/resume 인터페이스)     */
+  /* ---------------------------------------------------------- */
+  class Stopwatch {
+    constructor(onTick) {
+      this.onTick = onTick;
+      this.startTime = null;
+      this.elapsedBeforePause = 0;
+      this.isPaused = true;
+      this.timerId = null;
+    }
+    start() {
+      this.startTime = Date.now();
+      this.elapsedBeforePause = 0;
+      this.isPaused = false;
+      this._tick();
+    }
+    _tick() {
+      if (this.isPaused) return;
+      this.onTick(this.getElapsedMs());
+      this.timerId = setTimeout(() => this._tick(), 200);
+    }
+    pause() {
+      if (this.isPaused) return;
+      this.elapsedBeforePause += Date.now() - this.startTime;
+      this.isPaused = true;
+      clearTimeout(this.timerId);
+    }
+    resume() {
+      if (!this.isPaused) return;
+      this.startTime = Date.now();
+      this.isPaused = false;
+      this._tick();
+    }
+    stop() {
+      clearTimeout(this.timerId);
+    }
+    getElapsedMs() {
+      return this.elapsedBeforePause + (this.isPaused ? 0 : Date.now() - this.startTime);
+    }
   }
 
   /* ---------------------------------------------------------- */
@@ -56,8 +102,10 @@
   const state = loadState();
   const ui = {
     durationMin: state.settings.lastDuration || 25,
-    selectedBait: state.settings.selectedBait || 'dduckbap'
+    selectedBait: state.settings.selectedBait || 'dduckbap',
+    mode: 'timer'
   };
+  const MIN_STOPWATCH_SEC = 30;
 
   let currentScreen = 'start';
   let sessionCtx = null;
@@ -145,6 +193,7 @@
     }
     state.stats.totalFocusMinutes += entry.durationMin || 0;
     saveState(state);
+    updateTodayFocusChip();
   }
 
   function recordCatch(fishId, sizeCm, caughtAtDate) {
@@ -164,6 +213,18 @@
   function countSessionsToday(log) {
     const key = formatDateKey(new Date());
     return log.filter(e => e.date === key).length;
+  }
+
+  function computeTodayFocusMinutes(log) {
+    const key = formatDateKey(new Date());
+    return log.filter(e => e.date === key).reduce((sum, e) => sum + (e.durationMin || 0), 0);
+  }
+
+  function updateTodayFocusChip() {
+    const minutes = computeTodayFocusMinutes(state.sessionLog);
+    const h = Math.floor(minutes / 60);
+    const m = Math.round(minutes % 60);
+    el('todayFocusChip').textContent = `총 집중시간 ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
   }
 
   function recentCatchesThisWeek(log) {
@@ -233,6 +294,22 @@
     });
   }
 
+  function updateModeUi() {
+    document.querySelectorAll('.mode-chip').forEach(chip => {
+      chip.classList.toggle('is-active', chip.dataset.mode === ui.mode);
+    });
+    el('timerModeGroup').style.display = ui.mode === 'timer' ? '' : 'none';
+    el('stopwatchModeGroup').style.display = ui.mode === 'stopwatch' ? 'flex' : 'none';
+  }
+
+  document.querySelectorAll('.mode-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      ui.mode = chip.dataset.mode;
+      updateModeUi();
+      Sound.play('ui');
+    });
+  });
+
   el('btnMinus').addEventListener('click', () => {
     ui.durationMin = Math.max(5, ui.durationMin - 5);
     updateDialUi();
@@ -276,46 +353,63 @@
     saveState(state);
 
     const todaysCount = countSessionsToday(state.sessionLog) + 1;
-    el('focusBadge').textContent = `${ui.durationMin}분 집중 · ${todaysCount}회차`;
-
-    const totalMs = ui.durationMin * 60 * 1000;
     sessionCtx = {
-      durationMin: ui.durationMin,
+      mode: ui.mode,
+      durationMin: ui.mode === 'timer' ? ui.durationMin : 0,
       bait: ui.selectedBait,
-      totalMs,
-      remainingMs: totalMs,
       biteAttempt: 0,
       biteReactionSec: null
     };
 
     el('focusProgressFill').style.width = '0%';
+    el('focusProgressBar').style.display = ui.mode === 'timer' ? '' : 'none';
+    el('focusFinishWrap').style.display = ui.mode === 'stopwatch' ? 'flex' : 'none';
     setPauseIcon(false);
     showScreen('focus');
     Sound.play('ambient');
 
-    focusCountdown = new Countdown(
-      totalMs,
-      remainingMs => updateFocusUi(remainingMs, totalMs),
-      () => {
-        sessionCtx.remainingMs = 0;
-        focusCountdown = null;
-        onFocusComplete();
-      }
-    );
-    focusCountdown.start();
+    if (ui.mode === 'timer') {
+      el('focusBadge').textContent = `${ui.durationMin}분 집중 · ${todaysCount}회차`;
+      const totalMs = ui.durationMin * 60 * 1000;
+      focusCountdown = new Countdown(
+        totalMs,
+        remainingMs => updateFocusUiCountdown(remainingMs, totalMs),
+        () => {
+          focusCountdown = null;
+          onFocusComplete();
+        }
+      );
+      focusCountdown.start();
+    } else {
+      el('focusBadge').textContent = `스톱워치 집중 · ${todaysCount}회차`;
+      el('focusTimer').textContent = '00:00';
+      focusCountdown = new Stopwatch(elapsedMs => updateFocusUiStopwatch(elapsedMs));
+      focusCountdown.start();
+    }
   }
 
   /* ---------------------------------------------------------- */
   /* 2. 집중 대기 화면                                              */
   /* ---------------------------------------------------------- */
-  function updateFocusUi(remainingMs, totalMs) {
-    if (sessionCtx) sessionCtx.remainingMs = remainingMs;
+  function formatClock(totalMs) {
+    const totalSec = Math.floor(totalMs / 1000);
+    const h = Math.floor(totalSec / 3600);
+    const m = Math.floor((totalSec % 3600) / 60);
+    const s = totalSec % 60;
+    const mm = String(m).padStart(2, '0');
+    const ss = String(s).padStart(2, '0');
+    return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+  }
+
+  function updateFocusUiCountdown(remainingMs, totalMs) {
     const remainingSec = Math.ceil(remainingMs / 1000);
-    const m = Math.floor(remainingSec / 60);
-    const s = remainingSec % 60;
-    el('focusTimer').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    el('focusTimer').textContent = formatClock(Math.max(0, remainingSec * 1000));
     const progressPct = Math.min(100, ((totalMs - remainingMs) / totalMs) * 100);
     el('focusProgressFill').style.width = progressPct + '%';
+  }
+
+  function updateFocusUiStopwatch(elapsedMs) {
+    el('focusTimer').textContent = formatClock(elapsedMs);
   }
 
   function setPauseIcon(isPaused) {
@@ -339,11 +433,11 @@
 
   function abortFishing() {
     Sound.stop('ambient');
+    const elapsedMs = focusCountdown ? focusCountdown.getElapsedMs() : 0;
     if (focusCountdown) {
       focusCountdown.stop();
       focusCountdown = null;
     }
-    const elapsedMs = sessionCtx ? sessionCtx.totalMs - sessionCtx.remainingMs : 0;
     const focusedMinutes = Math.max(0, Math.round(elapsedMs / 60000));
     if (focusedMinutes > 0) {
       logSession({ durationMin: focusedMinutes, fishId: null, biteReactionSec: null, missed: true, reason: '중단' });
@@ -352,6 +446,19 @@
     showToast('낚시를 중단했어요');
     showScreen('start');
   }
+
+  el('btnFinishStopwatch').addEventListener('click', () => {
+    if (!sessionCtx || sessionCtx.mode !== 'stopwatch' || !focusCountdown) return;
+    const elapsedMs = focusCountdown.getElapsedMs();
+    if (elapsedMs < MIN_STOPWATCH_SEC * 1000) {
+      showToast('조금만 더 집중해보세요');
+      return;
+    }
+    focusCountdown.stop();
+    focusCountdown = null;
+    sessionCtx.durationMin = Math.max(1, Math.round(elapsedMs / 60000));
+    onFocusComplete();
+  });
 
   /* ---------------------------------------------------------- */
   /* 3. 입질 / 챔질                                                 */
@@ -589,6 +696,7 @@
   /* 7. 통계 화면                                                    */
   /* ---------------------------------------------------------- */
   function renderStats() {
+    el('statTodayFocus').textContent = formatMinutesHM(computeTodayFocusMinutes(state.sessionLog));
     el('statTotalFocus').textContent = formatMinutesHM(state.stats.totalFocusMinutes);
     el('statTotalCatches').textContent = `${state.stats.totalCatches}마리`;
     el('statStreak').textContent = `${computeStreakDays(state.sessionLog)}일 연속 출조`;
@@ -659,11 +767,11 @@
 
     if (currentScreen === 'focus') {
       Sound.stop('ambient');
+      const elapsedMs = focusCountdown ? focusCountdown.getElapsedMs() : 0;
       if (focusCountdown) {
         focusCountdown.stop();
         focusCountdown = null;
       }
-      const elapsedMs = sessionCtx ? sessionCtx.totalMs - sessionCtx.remainingMs : 0;
       const focusedMinutes = Math.max(0, Math.round(elapsedMs / 60000));
       if (focusedMinutes > 0) {
         logSession({ durationMin: focusedMinutes, fishId: null, biteReactionSec: null, missed: true, reason: '자리비움' });
@@ -685,5 +793,7 @@
   /* ---------------------------------------------------------- */
   updateDialUi();
   updateBaitUi();
+  updateModeUi();
+  updateTodayFocusChip();
   showScreen('start');
 })();
