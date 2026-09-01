@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>손맛 — 집중으로 낚는 손맛</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="phone" id="phone">
+
+    <!-- ============ 1. 시작 화면 ============ -->
+    <section class="screen screen-start is-active" data-screen="start">
+      <div class="water-bg water-bg--start">
+        <svg width="390" height="230" viewBox="0 0 390 230" class="water-svg">
+          <path d="M0,70 C60,30 130,100 195,65 C260,30 330,100 390,60 L390,230 L0,230 Z" fill="#256b71" opacity="0.55"></path>
+          <path d="M0,100 C70,60 140,130 195,100 C250,70 320,130 390,95 L390,230 L0,230 Z" fill="#1b4d54" opacity="0.85"></path>
+        </svg>
+      </div>
+
+      <div class="start-header">
+        <div class="brand-title">손맛</div>
+        <div class="brand-sub">집중으로 낚는 손맛</div>
+      </div>
+
+      <div class="dial">
+        <svg width="220" height="220" viewBox="0 0 220 220" class="dial-track">
+          <circle cx="110" cy="110" r="96" fill="rgba(255,255,255,0.05)" stroke="#6fb3ad" stroke-width="2" stroke-dasharray="3 9"></circle>
+          <circle id="dialProgress" cx="110" cy="110" r="96" fill="none" stroke="#e08a3c" stroke-width="5" stroke-dasharray="0 604" stroke-linecap="round" transform="rotate(-90 110 110)"></circle>
+        </svg>
+        <div class="dial-value">
+          <div class="dial-num" id="durationValue">25</div>
+          <div class="dial-unit">분</div>
+        </div>
+        <button class="dial-btn dial-btn--minus" id="btnMinus" aria-label="시간 줄이기">–</button>
+        <button class="dial-btn dial-btn--plus" id="btnPlus" aria-label="시간 늘리기">+</button>
+      </div>
+
+      <div class="preset-row" id="presetRow">
+        <button class="preset-chip" data-preset="15">15분</button>
+        <button class="preset-chip" data-preset="25">25분</button>
+        <button class="preset-chip" data-preset="45">45분</button>
+      </div>
+
+      <div class="bait-row" id="baitRow">
+        <button class="bait-chip" data-bait="dduckbap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f2c491" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"></circle><path d="M12 9v3l2 2"></path></svg>
+          <span>떡밥 미끼</span>
+        </button>
+        <button class="bait-chip" data-bait="jireongi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#bcd8d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c4-6 12-6 16 0"></path><path d="M4 12c4 6 12 6 16 0"></path></svg>
+          <span>지렁이 미끼</span>
+        </button>
+      </div>
+
+      <div class="cta-wrap">
+        <button class="btn-cast" id="btnCast">
+          <svg width="16" height="20" viewBox="0 0 18 22" fill="none" stroke="#fbf3e7" stroke-width="2" stroke-linecap="round"><path d="M9 1v13a4 4 0 0 0 8 0"></path></svg>
+          찌 던지기
+        </button>
+        <div class="cta-hint" id="ctaHint">집중을 유지하면 입질이 옵니다</div>
+      </div>
+
+      <nav class="tabbar">
+        <button class="tab-item is-active" data-nav="start">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"></circle><path d="M12 13v8"></path><path d="M9 21h6"></path></svg>
+          <span>시작</span>
+        </button>
+        <button class="tab-item" data-nav="collection">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2Z"></path><path d="M17 3v18"></path></svg>
+          <span>도감</span>
+        </button>
+        <button class="tab-item" data-nav="stats">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"></path><path d="M12 20V4"></path><path d="M20 20v-7"></path></svg>
+          <span>통계</span>
+        </button>
+      </nav>
+    </section>
+
+    <!-- ============ 2. 집중 대기 화면 ============ -->
+    <section class="screen screen-focus" data-screen="focus">
+      <div class="glow-spot"></div>
+      <div class="water-bg water-bg--focus">
+        <svg width="390" height="360" viewBox="0 0 390 360" class="water-svg">
+          <path d="M0,120 C60,80 130,150 195,115 C260,80 330,150 390,110 L390,360 L0,360 Z" fill="#20565d" opacity="0.5"></path>
+          <path d="M0,160 C70,120 140,190 195,160 C250,130 320,190 390,155 L390,360 L0,360 Z" fill="#184a50" opacity="0.75"></path>
+          <path d="M0,200 C80,175 150,220 195,200 C260,180 330,225 390,195 L390,360 L0,360 Z" fill="#123a40" opacity="0.9"></path>
+        </svg>
+      </div>
+
+      <div class="focus-badge-wrap">
+        <div class="focus-badge" id="focusBadge">25분 집중 · 1회차</div>
+      </div>
+      <div class="focus-caption">찌를 지켜보는 중...</div>
+
+      <div class="bobber-stage">
+        <div class="ripple"></div>
+        <div class="ripple ripple--delay"></div>
+        <div class="bobber">
+          <svg width="30" height="68" viewBox="0 0 30 68">
+            <line x1="15" y1="0" x2="15" y2="24" stroke="#e08a3c" stroke-width="3" stroke-linecap="round"></line>
+            <path d="M15 22 C24 26 24 42 15 48 C6 42 6 26 15 22 Z" fill="#fdf6ec" stroke="#8a5a2e" stroke-width="1.5"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="focus-timer-wrap">
+        <div class="focus-timer" id="focusTimer">25:00</div>
+        <div class="focus-progress">
+          <div class="focus-progress-fill" id="focusProgressFill"></div>
+        </div>
+      </div>
+
+      <div class="focus-controls">
+        <button class="round-btn" id="btnPause" aria-label="일시정지">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fbf3e7" id="pauseIcon"><rect x="5" y="4" width="5" height="16" rx="1.5"></rect><rect x="14" y="4" width="5" height="16" rx="1.5"></rect></svg>
+        </button>
+        <button class="round-btn" id="btnStop" aria-label="중단">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbf3e7"><rect x="4" y="4" width="16" height="16" rx="2.5"></rect></svg>
+        </button>
+      </div>
+
+      <div class="focus-warning">화면을 벗어나면 찌를 놓칠 수 있어요</div>
+    </section>
+
+    <!-- ============ 3. 입질/챔질 화면 ============ -->
+    <section class="screen screen-bite" data-screen="bite">
+      <div class="water-bg water-bg--bite">
+        <svg width="390" height="360" viewBox="0 0 390 360" class="water-svg">
+          <path d="M0,110 C60,150 130,80 195,120 C260,150 330,80 390,115 L390,360 L0,360 Z" fill="#20565d" opacity="0.55"></path>
+          <path d="M0,150 C70,190 140,120 195,155 C250,185 320,120 390,150 L390,360 L0,360 Z" fill="#184a50" opacity="0.8"></path>
+          <path d="M0,195 C80,220 150,175 195,195 C260,215 330,170 390,190 L390,360 L0,360 Z" fill="#123a40" opacity="0.95"></path>
+        </svg>
+      </div>
+
+      <div class="bite-header">
+        <div class="bite-title">입질이다!</div>
+        <div class="bite-sub" id="biteSub">찌가 물속으로 빨려 들어가요</div>
+      </div>
+
+      <div class="rod-tilt">
+        <svg width="30" height="66" viewBox="0 0 30 66">
+          <line x1="15" y1="0" x2="15" y2="20" stroke="#e08a3c" stroke-width="3" stroke-linecap="round"></line>
+          <path d="M15 18 C24 22 24 40 15 46 C6 40 6 22 15 18 Z" fill="#fdf6ec" stroke="#8a5a2e" stroke-width="1.5"></path>
+        </svg>
+      </div>
+
+      <svg width="200" height="120" viewBox="0 0 200 120" class="bite-ripplelines">
+        <path d="M10 60 Q50 20 100 60 Q150 100 190 60" fill="none" stroke="#cfe8e2" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M20 75 Q60 45 100 75 Q140 105 180 75" fill="none" stroke="#cfe8e2" stroke-width="2" stroke-linecap="round" opacity="0.6"></path>
+      </svg>
+
+      <div class="chaemjil-stage">
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring pulse-ring--delay"></div>
+        <button class="chaemjil-btn" id="btnChaemjil">
+          <svg width="24" height="28" viewBox="0 0 18 22" fill="none" stroke="#fff8ee" stroke-width="2.2" stroke-linecap="round"><path d="M9 1v13a4 4 0 0 0 8 0"></path></svg>
+          <span>챔질!</span>
+        </button>
+      </div>
+
+      <div class="bite-hint" id="biteHint">지금 탭해서 챔질하세요</div>
+    </section>
+
+    <!-- ============ 4. 릴링 화면 ============ -->
+    <section class="screen screen-reeling" data-screen="reeling">
+      <div class="water-bg water-bg--reeling">
+        <svg width="390" height="300" viewBox="0 0 390 300" class="water-svg">
+          <path d="M0,90 C60,50 130,120 195,85 C260,50 330,120 390,80 L390,300 L0,300 Z" fill="#256b71" opacity="0.5"></path>
+          <path d="M0,130 C70,90 140,160 195,130 C250,100 320,160 390,125 L390,300 L0,300 Z" fill="#1b4d54" opacity="0.85"></path>
+        </svg>
+      </div>
+
+      <div class="reeling-header">
+        <div class="reeling-title">릴링 중...</div>
+        <div class="reeling-sub">당겼다 풀었다 리듬을 맞추세요</div>
+      </div>
+
+      <svg width="230" height="220" viewBox="0 0 230 220" class="reeling-fish-line" id="reelingFishSvg">
+        <path d="M210 20 L120 120" stroke="#e0dccd" stroke-width="1.5" stroke-dasharray="4 5"></path>
+        <g transform="translate(30,90) rotate(-18)">
+          <ellipse cx="26" cy="18" rx="26" ry="16" fill="#4f9aa0"></ellipse>
+          <path d="M50 18 L74 4 L74 32 Z" fill="#4f9aa0"></path>
+          <circle cx="12" cy="14" r="2.6" fill="#0d2438"></circle>
+          <path d="M0 18 Q26 4 52 12" fill="none" stroke="#7fc2c6" stroke-width="3" opacity="0.7"></path>
+        </g>
+      </svg>
+
+      <div class="tension-gauge">
+        <div class="tension-zone tension-zone--red"></div>
+        <div class="tension-zone tension-zone--yellow"></div>
+        <div class="tension-zone tension-zone--green"></div>
+        <div class="tension-marker" id="tensionMarker"></div>
+      </div>
+      <div class="tension-label">장력</div>
+
+      <div class="reeling-progress-num" id="reelingPercent">0%</div>
+      <div class="reeling-progress-caption">릴 감기 진행률</div>
+
+      <div class="reeling-bar">
+        <div class="reeling-bar-fill" id="reelingBarFill"></div>
+      </div>
+
+      <div class="reel-handle-wrap">
+        <button class="reel-handle" id="btnReel" aria-label="릴 감기">
+          <svg width="140" height="50" viewBox="0 0 140 50">
+            <rect x="10" y="18" width="120" height="14" rx="7" fill="#8a5a2e"></rect>
+            <circle cx="118" cy="25" r="16" fill="#a9713f" stroke="#5f3a1c" stroke-width="2"></circle>
+            <circle cx="118" cy="25" r="3" fill="#fbf3e7"></circle>
+          </svg>
+        </button>
+      </div>
+      <div class="reeling-warning" id="reelingWarning">장력이 너무 강해요! 잠시 늦추세요</div>
+    </section>
+
+    <!-- ============ 5. 결과 화면 ============ -->
+    <section class="screen screen-result" data-screen="result">
+      <div class="result-header">
+        <div class="result-eyebrow">낚시 성공!</div>
+        <div class="result-title">오늘의 손맛</div>
+      </div>
+
+      <div class="result-card">
+        <div class="rarity-badge" id="rarityBadge">희귀 등급</div>
+
+        <div class="result-fish-wrap" id="resultFishSvg"></div>
+
+        <div class="result-fish-info">
+          <div class="result-fish-name" id="resultFishName">황금붕어</div>
+          <div class="result-fish-meta" id="resultFishMeta">32cm · 오후 3:14 포획</div>
+        </div>
+
+        <div class="result-stat-row">
+          <div class="result-stat">
+            <div class="result-stat-label">집중 시간</div>
+            <div class="result-stat-value" id="resultDuration">25분</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-label">챔질 반응</div>
+            <div class="result-stat-value" id="resultReaction">0.4초</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-label">누적 조과</div>
+            <div class="result-stat-value" id="resultTotalCatches">12마리</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn-primary" id="btnGoCollection">도감에 저장하기</button>
+        <button class="btn-outline" id="btnFishAgain">다시 낚시하기</button>
+      </div>
+
+      <div class="result-footnote" id="resultFootnote">이번 주 1번째 손맛이에요</div>
+    </section>
+
+    <!-- ============ 3-b. 놓침 화면(간이) ============ -->
+    <section class="screen screen-missed" data-screen="missed">
+      <div class="water-bg water-bg--bite">
+        <svg width="390" height="360" viewBox="0 0 390 360" class="water-svg">
+          <path d="M0,110 C60,150 130,80 195,120 C260,150 330,80 390,115 L390,360 L0,360 Z" fill="#20565d" opacity="0.55"></path>
+        </svg>
+      </div>
+      <div class="missed-wrap">
+        <div class="missed-title">아쉽지만 놓쳤어요</div>
+        <div class="missed-sub" id="missedReason">찌가 다시 잠잠해졌어요</div>
+        <button class="btn-cast missed-btn" id="btnMissedBack">시작 화면으로</button>
+      </div>
+    </section>
+
+    <!-- ============ 6. 도감 화면 ============ -->
+    <section class="screen screen-collection" data-screen="collection">
+      <div class="collection-header">
+        <div class="page-title">도감</div>
+        <div class="collection-progress-row">
+          <div class="collection-progress-text" id="collectionCountText">0 / 10 마리 수집</div>
+          <div class="collection-progress-pct" id="collectionPctText">0%</div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-track-fill" id="collectionProgressFill"></div>
+        </div>
+      </div>
+
+      <div class="filter-row" id="filterRow">
+        <button class="filter-chip is-active" data-filter="all">전체</button>
+        <button class="filter-chip" data-filter="common">일반</button>
+        <button class="filter-chip" data-filter="rare">희귀</button>
+        <button class="filter-chip" data-filter="legendary">전설</button>
+      </div>
+
+      <div class="fish-grid" id="fishGrid"></div>
+
+      <nav class="tabbar">
+        <button class="tab-item" data-nav="start">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"></circle><path d="M12 13v8"></path><path d="M9 21h6"></path></svg>
+          <span>시작</span>
+        </button>
+        <button class="tab-item is-active" data-nav="collection">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2Z"></path><path d="M17 3v18"></path></svg>
+          <span>도감</span>
+        </button>
+        <button class="tab-item" data-nav="stats">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"></path><path d="M12 20V4"></path><path d="M20 20v-7"></path></svg>
+          <span>통계</span>
+        </button>
+      </nav>
+    </section>
+
+    <!-- ============ 7. 통계 화면 ============ -->
+    <section class="screen screen-stats" data-screen="stats">
+      <div class="stats-header">
+        <div class="page-title">통계</div>
+        <div class="page-sub">꾸준한 손맛의 기록</div>
+      </div>
+
+      <div class="stats-top-row">
+        <div class="stats-card">
+          <div class="stats-card-label">총 집중 시간</div>
+          <div class="stats-card-value" id="statTotalFocus">0시간 0분</div>
+        </div>
+        <div class="stats-card">
+          <div class="stats-card-label">총 조과</div>
+          <div class="stats-card-value" id="statTotalCatches">0마리</div>
+        </div>
+      </div>
+
+      <div class="streak-wrap">
+        <div class="streak-card">
+          <div>
+            <div class="streak-label">연속 집중 기록</div>
+            <div class="streak-value" id="statStreak">0일 연속 출조</div>
+          </div>
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#e08a3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4-2 5-2 9a4 4 0 0 0 8 0c0-2-1-3-1-3s1 4-2 4-3-3-1-6c-3 0-5 1-5 4a5 5 0 0 0 10 0C19 6 15 4 12 3Z"></path></svg>
+        </div>
+      </div>
+
+      <div class="weekly-wrap">
+        <div class="section-label">이번 주 집중 시간</div>
+        <div class="weekly-card">
+          <div class="weekly-bars" id="weeklyBars"></div>
+        </div>
+      </div>
+
+      <div class="recent-wrap">
+        <div class="section-label">이번 주 조황</div>
+        <div class="recent-list" id="recentList"></div>
+      </div>
+
+      <div class="stats-spacer"></div>
+
+      <nav class="tabbar">
+        <button class="tab-item" data-nav="start">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"></circle><path d="M12 13v8"></path><path d="M9 21h6"></path></svg>
+          <span>시작</span>
+        </button>
+        <button class="tab-item" data-nav="collection">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2Z"></path><path d="M17 3v18"></path></svg>
+          <span>도감</span>
+        </button>
+        <button class="tab-item is-active" data-nav="stats">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"></path><path d="M12 20V4"></path><path d="M20 20v-7"></path></svg>
+          <span>통계</span>
+        </button>
+      </nav>
+    </section>
+
+    <div class="toast" id="toast"></div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
