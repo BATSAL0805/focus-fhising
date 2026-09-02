@@ -485,7 +485,7 @@ button {
 .toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ===================== 가로 모드 (기기 회전 시 자동 반응형) ===================== */
-@media (orientation: landscape) and (max-height: 560px) {
+@media (orientation: landscape) and (max-height: 920px) {
 
   .app-shell { padding: 0; }
   .phone {
@@ -504,12 +504,12 @@ button {
     grid-template-columns: 42% 58%;
     grid-template-rows: auto auto auto auto;
     align-content: center;
-    row-gap: 8px; column-gap: 10px;
+    row-gap: clamp(8px, 2vh, 20px); column-gap: 10px;
     padding: 8px 22px 60px 26px;
     overflow-y: auto;
   }
   .screen-start .start-header { grid-column: 1; grid-row: 1; text-align: left; padding: 0; }
-  .screen-start .brand-title { font-size: 22px; }
+  .screen-start .brand-title { font-size: clamp(22px, 3.5vh, 28px); }
   .screen-start .brand-sub { font-size: 11px; }
   .screen-start .today-focus-chip { margin-top: 6px; font-size: 10.5px; padding: 5px 12px; }
   .screen-start .mode-row { grid-column: 1; grid-row: 2; padding: 0; margin-top: 0; }
@@ -523,8 +523,8 @@ button {
     grid-column: 2; grid-row: 1 / 5;
     margin: 0; justify-self: center; align-self: center;
   }
-  .screen-start .dial { width: 142px; height: 142px; margin: 0; }
-  .screen-start .dial-num { font-size: 34px; }
+  .screen-start .dial { width: clamp(142px, 25vh, 200px); height: clamp(142px, 25vh, 200px); margin: 0; }
+  .screen-start .dial-num { font-size: clamp(34px, 6vh, 48px); }
   .screen-start .dial-unit { font-size: 11px; margin-top: 2px; }
   .screen-start .dial-btn { width: 32px; height: 32px; font-size: 15px; }
   .screen-start .dial-btn--minus { left: -10px; }
@@ -541,7 +541,7 @@ button {
     grid-template-columns: 34% 66%;
     grid-auto-rows: min-content;
     align-content: center;
-    row-gap: 6px; column-gap: 10px;
+    row-gap: clamp(6px, 1.6vh, 16px); column-gap: 10px;
     padding: 8px 24px;
     overflow-y: auto;
   }
@@ -549,24 +549,27 @@ button {
   .screen-focus .focus-caption { grid-column: 2; grid-row: 2; margin-top: 0; text-align: left; }
   .screen-focus .bobber-stage {
     left: 17%; top: 50%; transform: translateX(-50%) translateY(-50%);
-    width: 96px; height: 96px;
+    width: clamp(96px, 17.5vh, 140px); height: clamp(96px, 17.5vh, 140px);
   }
   .screen-focus .focus-timer-wrap { position: static; grid-column: 2; grid-row: 3; text-align: left; margin-top: 2px; }
-  .screen-focus .focus-timer { font-size: 38px; }
+  .screen-focus .focus-timer { font-size: clamp(38px, 7.2vh, 58px); }
   .screen-focus .focus-progress { margin: 8px 0 0; margin-left: 0; }
   .screen-focus .focus-finish-wrap { position: static; grid-column: 2; grid-row: 4; justify-content: flex-start; margin-top: 6px; }
   .screen-focus .focus-controls { position: static; grid-column: 2; grid-row: 5; justify-content: flex-start; gap: 12px; margin-top: 6px; }
-  .screen-focus .round-btn { width: 44px; height: 44px; }
+  .screen-focus .round-btn { width: clamp(44px, 6.7vh, 54px); height: clamp(44px, 6.7vh, 54px); }
   .screen-focus .focus-warning { position: static; grid-column: 2; grid-row: 6; text-align: left; margin-top: 4px; font-size: 10px; }
 
   /* ---- 3. 입질/챔질 화면: 좌(찌·물결) / 우(챔질 버튼) ---- */
   .screen-bite { padding-top: 4px; overflow-y: auto; }
   .screen-bite .bite-header { padding: 14px 22px 0; text-align: left; }
-  .screen-bite .bite-title { font-size: 26px; }
+  .screen-bite .bite-title { font-size: clamp(26px, 4.5vh, 36px); }
   .screen-bite .rod-tilt { left: 24%; top: 50%; }
   .screen-bite .bite-splash { left: 24%; top: 58%; }
-  .screen-bite .bite-ripplelines { left: 4%; top: 68%; width: 150px; height: auto; }
-  .screen-bite .chaemjil-stage { left: 76%; top: 54%; width: 148px; height: 148px; }
+  .screen-bite .bite-ripplelines { left: 4%; top: 68%; width: clamp(150px, 20vh, 220px); height: auto; }
+  .screen-bite .chaemjil-stage {
+    left: 76%; top: 54%;
+    width: clamp(148px, 22vh, 180px); height: clamp(148px, 22vh, 180px);
+  }
   .screen-bite .bite-hint { left: auto; right: 4%; width: 46%; bottom: 6%; text-align: center; }
 
   /* ---- 4. 릴링 화면: 좌(물고기·장력) / 우(진행률·릴 핸들) ---- */
@@ -575,26 +578,26 @@ button {
     grid-template-columns: 42% 58%;
     grid-auto-rows: min-content;
     align-content: center;
-    row-gap: 4px;
+    row-gap: clamp(4px, 1.2vh, 14px);
     padding: 8px 24px;
     overflow-y: auto;
   }
   .screen-reeling .reeling-header { position: static; grid-column: 2; grid-row: 1; padding: 0; text-align: left; }
-  .screen-reeling .reeling-title { font-size: 19px; }
+  .screen-reeling .reeling-title { font-size: clamp(19px, 3.5vh, 26px); }
   .screen-reeling .reeling-sub { font-size: 11px; }
   .screen-reeling .reeling-fish-line {
     /* JS가 인라인 style.transform으로 rotate()를 덮어쓰므로 여기서는 transform을 쓰지 않고
        left/top만으로 배치한다 (transform 기반 중앙정렬과 충돌 방지) */
     left: 4%; top: 30%;
-    width: 150px; height: 140px;
+    width: clamp(150px, 25vh, 200px); height: clamp(140px, 23vh, 186px);
   }
-  .screen-reeling .tension-gauge { right: 3%; top: 18%; height: 62%; width: 20px; }
+  .screen-reeling .tension-gauge { right: 3%; top: 18%; height: 62%; width: clamp(20px, 3.75vh, 30px); }
   .screen-reeling .tension-label { display: none; }
-  .screen-reeling .reeling-progress-num { position: static; grid-column: 2; grid-row: 2; text-align: left; font-size: 30px; margin-top: 0; }
+  .screen-reeling .reeling-progress-num { position: static; grid-column: 2; grid-row: 2; text-align: left; font-size: clamp(30px, 5.5vh, 44px); margin-top: 0; }
   .screen-reeling .reeling-progress-caption { position: static; grid-column: 2; grid-row: 3; text-align: left; margin-top: 0; }
   .screen-reeling .reeling-bar { position: static; grid-column: 2; grid-row: 4; left: auto; right: auto; margin-top: 8px; width: 100%; }
   .screen-reeling .reel-handle-wrap { position: static; grid-column: 2; grid-row: 5; justify-content: flex-start; margin-top: 10px; }
-  .screen-reeling .reel-handle svg { width: 118px; height: 42px; }
+  .screen-reeling .reel-handle svg { width: clamp(118px, 18.7vh, 150px); height: clamp(42px, 6.6vh, 53px); }
   .screen-reeling .reeling-warning { position: static; grid-column: 2; grid-row: 6; text-align: left; margin-top: 4px; }
 
   /* 세로 기준 크기의 파도 배경이 짧은 가로 화면에서 과도하게 덮이는 것을 완화 */
