@@ -122,6 +122,9 @@ button {
 .screen-start {
   background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy2) 32%, var(--teal-dark) 62%, var(--teal) 100%);
   overflow-y: auto;
+  /* 하단에 항상 떠 있는 .tabbar(82px)에 콘텐츠가 가려도 브라우저의 자동 스크롤(scrollIntoView)이
+     이를 인지하고 넘겨서 스크롤하도록 스크롤 여백을 예약해둔다 */
+  scroll-padding-bottom: 82px;
 }
 
 .start-header { position: relative; padding: 54px 28px 0; text-align: center; }
@@ -220,9 +223,27 @@ button {
   .screen-start .dial-btn--plus { right: -14px; }
   .screen-start .preset-row { margin-top: 14px; }
   .screen-start .bait-row { margin-top: 12px; }
-  .screen-start .cta-wrap { margin-top: 14px; }
+  .screen-start .cta-wrap { margin-top: 14px; padding-bottom: 24px; }
   .screen-start .btn-cast { padding: 13px; }
   .screen-start .cta-hint { margin-top: 6px; }
+}
+
+/* 매우 짧은 화면(iPhone SE 1세대 등, ~568px 높이)에서는 위 축소만으로는
+   찌 던지기 버튼이 하단 탭바(82px)에 가려질 수 있어 한 단계 더 압축한다 */
+@media (max-height: 600px) {
+  .screen-start .start-header { padding-top: 14px; }
+  .screen-start .today-focus-chip { margin-top: 6px; }
+  .screen-start .mode-row { margin-top: 10px; }
+  .screen-start .dial { width: 138px; height: 138px; margin-top: 8px; }
+  .screen-start .dial-num { font-size: 36px; }
+  .screen-start .dial-unit { font-size: 12px; margin-top: 2px; }
+  .screen-start .dial-btn { width: 32px; height: 32px; font-size: 15px; }
+  .screen-start .preset-row { margin-top: 10px; }
+  .screen-start .preset-chip { padding: 6px 14px; }
+  .screen-start .bait-row { margin-top: 8px; }
+  .screen-start .cta-wrap { margin-top: 8px; }
+  .screen-start .btn-cast { padding: 11px; }
+  .screen-start .cta-hint { margin-top: 4px; font-size: 11px; }
 }
 
 /* ===================== 2. 집중 대기 화면 ===================== */
