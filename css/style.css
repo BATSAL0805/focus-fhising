@@ -110,7 +110,7 @@ button {
 
 .screen.is-active { display: flex; }
 
-.screen-collection, .screen-stats, .screen-result {
+.screen-start, .screen-collection, .screen-stats, .screen-result {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
 }
@@ -121,6 +121,7 @@ button {
 /* ===================== 1. 시작 화면 ===================== */
 .screen-start {
   background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy2) 32%, var(--teal-dark) 62%, var(--teal) 100%);
+  overflow-y: auto;
 }
 
 .start-header { position: relative; padding: 54px 28px 0; text-align: center; }
@@ -205,6 +206,25 @@ button {
 .tab-item svg { stroke: currentColor; }
 .tab-item.is-active { color: var(--cream); font-weight: 700; }
 
+/* 짧은 세로 화면(예: iPhone SE, 저가 안드로이드)에서 콘텐츠가 탭바와 겹치지 않도록
+   390x844 기준 디자인은 그대로 두고, 이 구간에서만 여백을 줄여 스크롤 없이 들어오게 한다 */
+@media (max-height: 750px) {
+  .screen-start .start-header { padding-top: 26px; }
+  .screen-start .today-focus-chip { margin-top: 8px; }
+  .screen-start .mode-row { margin-top: 14px; }
+  .screen-start .dial { width: 170px; height: 170px; margin-top: 14px; }
+  .screen-start .dial-num { font-size: 44px; }
+  .screen-start .dial-unit { margin-top: 3px; }
+  .screen-start .dial-btn { width: 36px; height: 36px; font-size: 17px; }
+  .screen-start .dial-btn--minus { left: -14px; }
+  .screen-start .dial-btn--plus { right: -14px; }
+  .screen-start .preset-row { margin-top: 14px; }
+  .screen-start .bait-row { margin-top: 12px; }
+  .screen-start .cta-wrap { margin-top: 14px; }
+  .screen-start .btn-cast { padding: 13px; }
+  .screen-start .cta-hint { margin-top: 6px; }
+}
+
 /* ===================== 2. 집중 대기 화면 ===================== */
 .screen-focus {
   background: linear-gradient(180deg, #0a1c2c 0%, #0f2b3d 22%, var(--teal3) 48%, #1f5c62 100%);
@@ -263,7 +283,7 @@ button {
 .bite-sub { margin-top: 8px; font-size: 13px; color: var(--text-mint3); }
 
 .rod-tilt {
-  position: absolute; left: 50%; top: 250px; transform: translateX(-50%) translateY(0) rotate(-10deg);
+  position: absolute; left: 50%; top: 29.62vh; transform: translateX(-50%) translateY(0) rotate(-10deg);
   animation: bite-motion 2.2s cubic-bezier(0.45, 0.05, 0.35, 1) infinite;
   transform-origin: 15px 20px;
 }
@@ -278,7 +298,7 @@ button {
   100% { transform: translateX(-50%) translateY(24px) rotate(-32deg); }
 }
 
-.bite-splash { position: absolute; left: 50%; top: 292px; transform: translateX(-50%); width: 80px; height: 26px; }
+.bite-splash { position: absolute; left: 50%; top: 34.61vh; transform: translateX(-50%); width: 80px; height: 26px; }
 .bite-splash-ring {
   position: absolute; left: 50%; top: 50%; width: 56px; height: 18px; border-radius: 50%;
   border: 1.5px solid rgba(207, 232, 226, 0.5); transform: translate(-50%, -50%) scale(0.6);
@@ -292,10 +312,10 @@ button {
   100% { transform: translate(-50%, -50%) scale(1.9); opacity: 0; }
 }
 
-.bite-ripplelines { position: absolute; left: 95px; top: 330px; opacity: 0.55; animation: water-drift 3.4s ease-in-out infinite; }
+.bite-ripplelines { position: absolute; left: 95px; top: 39.10vh; opacity: 0.55; animation: water-drift 3.4s ease-in-out infinite; }
 @keyframes water-drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-6px); } }
 
-.chaemjil-stage { position: absolute; left: 50%; top: 520px; transform: translate(-50%, -50%); width: 170px; height: 170px; }
+.chaemjil-stage { position: absolute; left: 50%; top: 61.61vh; transform: translate(-50%, -50%); width: 170px; height: 170px; }
 .pulse-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(224, 138, 60, 0.6); animation: pulse-ring 1.6s ease-out infinite; }
 .pulse-ring--delay { inset: 14px; animation-delay: 0.5s; }
 @keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.7; } 100% { transform: scale(1.5); opacity: 0; } }
@@ -309,7 +329,7 @@ button {
 .chaemjil-btn:active { filter: brightness(0.95); transform: scale(0.98); }
 .chaemjil-btn span { font-family: var(--font-serif); font-size: 19px; font-weight: 700; color: var(--cream3); }
 
-.bite-hint { position: absolute; left: 0; right: 0; bottom: 96px; text-align: center; font-size: 13px; color: var(--text-amber); }
+.bite-hint { position: absolute; left: 0; right: 0; bottom: 11.37vh; text-align: center; font-size: 13px; color: var(--text-amber); }
 
 /* ===================== 3-b. 놓침 화면 ===================== */
 .screen-missed { background: linear-gradient(180deg, #0a1826 0%, var(--navy-deep) 20%, #173a2e 55%, #1f5c62 100%); }
