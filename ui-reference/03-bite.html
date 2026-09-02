@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. 입질/챔질 화면</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Gowun Dodum', sans-serif; }
+    a { color: #e08a3c; }
+    a:hover { color: #c98a46; }
+    @keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.7; } 100% { transform: scale(1.5); opacity: 0; } }
+    @keyframes tilt { 0%,100% { transform: translateX(-50%) rotate(-14deg); } 50% { transform: translateX(-50%) rotate(-22deg); } }
+  </style>
+<style>
+  html, body { background:#e9e2d3; }
+  body { display:flex; align-items:flex-start; justify-content:center; padding:40px 20px; margin:0; }
+</style>
+</head>
+<body>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:linear-gradient(180deg,#0a1826 0%,#0d2438 20%,#173a2e 55%,#1f5c62 100%);color:#fbf3e7;">
+
+  <svg width="390" height="360" viewBox="0 0 390 360" style="position:absolute;left:0;bottom:0;">
+    <path d="M0,110 C60,150 130,80 195,120 C260,150 330,80 390,115 L390,360 L0,360 Z" fill="#20565d" opacity="0.55"></path>
+    <path d="M0,150 C70,190 140,120 195,155 C250,185 320,120 390,150 L390,360 L0,360 Z" fill="#184a50" opacity="0.8"></path>
+    <path d="M0,195 C80,220 150,175 195,195 C260,215 330,170 390,190 L390,360 L0,360 Z" fill="#123a40" opacity="0.95"></path>
+  </svg>
+
+  <div style="position:relative;padding:64px 24px 0;text-align:center;">
+    <div style="font-family:'Gowun Batang',serif;font-size:34px;font-weight:700;color:#f2b26b;text-shadow:0 0 22px rgba(224,138,60,0.55);">입질이다!</div>
+    <div style="margin-top:8px;font-size:13px;color:#cfe0dc;">찌가 물속으로 빨려 들어가요</div>
+  </div>
+
+  <div style="position:absolute;left:50%;top:250px;transform:translateX(-50%) rotate(-14deg);animation:tilt 0.6s ease-in-out infinite;transform-origin:15px 20px;">
+    <svg width="30" height="66" viewBox="0 0 30 66">
+      <line x1="15" y1="0" x2="15" y2="20" stroke="#e08a3c" stroke-width="3" stroke-linecap="round"></line>
+      <path d="M15 18 C24 22 24 40 15 46 C6 40 6 22 15 18 Z" fill="#fdf6ec" stroke="#8a5a2e" stroke-width="1.5"></path>
+    </svg>
+  </div>
+
+  <svg width="200" height="120" viewBox="0 0 200 120" style="position:absolute;left:95px;top:330px;opacity:0.55;">
+    <path d="M10 60 Q50 20 100 60 Q150 100 190 60" fill="none" stroke="#cfe8e2" stroke-width="2" stroke-linecap="round"></path>
+    <path d="M20 75 Q60 45 100 75 Q140 105 180 75" fill="none" stroke="#cfe8e2" stroke-width="2" stroke-linecap="round" opacity="0.6"></path>
+  </svg>
+
+  <div style="position:absolute;left:50%;top:520px;transform:translate(-50%,-50%);width:170px;height:170px;">
+    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(224,138,60,0.6);animation:pulse-ring 1.6s ease-out infinite;"></div>
+    <div style="position:absolute;inset:14px;border-radius:50%;border:2px solid rgba(224,138,60,0.6);animation:pulse-ring 1.6s ease-out infinite 0.5s;"></div>
+    <button style="position:absolute;inset:22px;border-radius:50%;border:none;background:radial-gradient(circle at 35% 30%,#e6a35e,#a9713f 70%);box-shadow:0 8px 22px rgba(0,0,0,0.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
+      <svg width="24" height="28" viewBox="0 0 18 22" fill="none" stroke="#fff8ee" stroke-width="2.2" stroke-linecap="round"><path d="M9 1v13a4 4 0 0 0 8 0"></path></svg>
+      <span style="font-family:'Gowun Batang',serif;font-size:19px;font-weight:700;color:#fff8ee;">챔질!</span>
+    </button>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;bottom:96px;text-align:center;font-size:13px;color:#f2c491;">지금 탭해서 챔질하세요</div>
+
+</div>
+</body>
+</html>

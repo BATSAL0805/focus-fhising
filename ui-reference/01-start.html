@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. 시작 화면</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Gowun Dodum', sans-serif; }
+    a { color: #e08a3c; }
+    a:hover { color: #c98a46; }
+  </style>
+<style>
+  html, body { background:#e9e2d3; }
+  body { display:flex; align-items:flex-start; justify-content:center; padding:40px 20px; margin:0; }
+</style>
+</head>
+<body>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:linear-gradient(180deg,#0d2438 0%,#123249 32%,#1b4d54 62%,#2f7a80 100%);color:#fbf3e7;">
+
+  <svg width="390" height="230" viewBox="0 0 390 230" style="position:absolute;left:0;bottom:0;">
+    <path d="M0,70 C60,30 130,100 195,65 C260,30 330,100 390,60 L390,230 L0,230 Z" fill="#256b71" opacity="0.55"></path>
+    <path d="M0,100 C70,60 140,130 195,100 C250,70 320,130 390,95 L390,230 L0,230 Z" fill="#1b4d54" opacity="0.85"></path>
+  </svg>
+
+  <div style="position:relative;padding:54px 28px 0;text-align:center;">
+    <div style="font-family:'Gowun Batang',serif;font-size:30px;font-weight:700;letter-spacing:3px;">손맛</div>
+    <div style="margin-top:6px;font-size:13px;color:#bcd8d4;opacity:0.9;">집중으로 낚는 손맛</div>
+  </div>
+
+  <div style="position:relative;margin:34px auto 0;width:220px;height:220px;">
+    <svg width="220" height="220" viewBox="0 0 220 220" style="position:absolute;top:0;left:0;">
+      <circle cx="110" cy="110" r="96" fill="rgba(255,255,255,0.05)" stroke="#6fb3ad" stroke-width="2" stroke-dasharray="3 9"></circle>
+      <circle cx="110" cy="110" r="96" fill="none" stroke="#e08a3c" stroke-width="5" stroke-dasharray="235 400" stroke-linecap="round" transform="rotate(-90 110 110)"></circle>
+    </svg>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <div style="font-family:'Gowun Batang',serif;font-size:58px;font-weight:700;line-height:1;">25</div>
+      <div style="font-size:14px;color:#bcd8d4;margin-top:6px;">분</div>
+    </div>
+    <button style="position:absolute;left:-16px;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:linear-gradient(180deg,#c98a46,#8a5a2e);border:none;color:#fbf3e7;font-size:20px;box-shadow:0 3px 8px rgba(0,0,0,0.3);">–</button>
+    <button style="position:absolute;right:-16px;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:linear-gradient(180deg,#c98a46,#8a5a2e);border:none;color:#fbf3e7;font-size:20px;box-shadow:0 3px 8px rgba(0,0,0,0.3);">+</button>
+  </div>
+
+  <div style="position:relative;display:flex;gap:10px;justify-content:center;margin-top:32px;">
+    <div style="padding:8px 18px;border-radius:20px;background:rgba(255,255,255,0.08);font-size:13px;">15분</div>
+    <div style="padding:8px 20px;border-radius:20px;background:#e08a3c;color:#1c2b2f;font-weight:700;font-size:13px;">25분</div>
+    <div style="padding:8px 18px;border-radius:20px;background:rgba(255,255,255,0.08);font-size:13px;">45분</div>
+  </div>
+
+  <div style="position:relative;display:flex;gap:12px;justify-content:center;margin-top:26px;padding:0 28px;">
+    <div style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,0.1);border:1.5px solid #e08a3c;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f2c491" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"></circle><path d="M12 9v3l2 2"></path></svg>
+      <span style="font-size:12.5px;">떡밥 미끼</span>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,0.06);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#bcd8d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c4-6 12-6 16 0"></path><path d="M4 12c4 6 12 6 16 0"></path></svg>
+      <span style="font-size:12.5px;color:#d7e8e5;">지렁이 미끼</span>
+    </div>
+  </div>
+
+  <div style="position:relative;padding:0 28px;margin-top:34px;">
+    <button style="width:100%;padding:16px;border:none;border-radius:28px;background:linear-gradient(90deg,#c98a46,#a9713f);color:#fbf3e7;font-size:17px;font-weight:700;font-family:'Gowun Batang',serif;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 16px rgba(0,0,0,0.3);">
+      <svg width="16" height="20" viewBox="0 0 18 22" fill="none" stroke="#fbf3e7" stroke-width="2" stroke-linecap="round"><path d="M9 1v13a4 4 0 0 0 8 0"></path></svg>
+      찌 던지기
+    </button>
+    <div style="text-align:center;margin-top:10px;font-size:12px;color:#a9c7c3;">집중을 유지하면 입질이 옵니다</div>
+  </div>
+
+  <div style="position:absolute;left:0;bottom:0;width:390px;height:82px;background:linear-gradient(180deg,#b5793f,#8a5a2e);display:flex;align-items:center;justify-content:space-around;padding:0 10px 6px;box-shadow:0 -4px 14px rgba(0,0,0,0.25);">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;color:#fbf3e7;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbf3e7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"></circle><path d="M12 13v8"></path><path d="M9 21h6"></path></svg>
+      <span style="font-size:11px;font-weight:700;">시작</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;color:rgba(251,243,231,0.55);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2Z"></path><path d="M17 3v18"></path></svg>
+      <span style="font-size:11px;">도감</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;color:rgba(251,243,231,0.55);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"></path><path d="M12 20V4"></path><path d="M20 20v-7"></path></svg>
+      <span style="font-size:11px;">통계</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

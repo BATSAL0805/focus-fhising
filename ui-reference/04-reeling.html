@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4. 릴링 화면</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Gowun Dodum', sans-serif; }
+    a { color: #e08a3c; }
+    a:hover { color: #c98a46; }
+  </style>
+<style>
+  html, body { background:#e9e2d3; }
+  body { display:flex; align-items:flex-start; justify-content:center; padding:40px 20px; margin:0; }
+</style>
+</head>
+<body>
+<div style="width:390px;height:844px;position:relative;overflow:hidden;background:linear-gradient(180deg,#0d2438 0%,#164457 30%,#1f5c62 65%,#2a7a80 100%);color:#fbf3e7;">
+
+  <svg width="390" height="300" viewBox="0 0 390 300" style="position:absolute;left:0;bottom:0;">
+    <path d="M0,90 C60,50 130,120 195,85 C260,50 330,120 390,80 L390,300 L0,300 Z" fill="#256b71" opacity="0.5"></path>
+    <path d="M0,130 C70,90 140,160 195,130 C250,100 320,160 390,125 L390,300 L0,300 Z" fill="#1b4d54" opacity="0.85"></path>
+  </svg>
+
+  <div style="position:relative;padding:54px 24px 0;text-align:center;">
+    <div style="font-family:'Gowun Batang',serif;font-size:24px;font-weight:700;">릴링 중...</div>
+    <div style="margin-top:6px;font-size:12.5px;color:#cfe0dc;">당겼다 풀었다 리듬을 맞추세요</div>
+  </div>
+
+  <svg width="230" height="220" viewBox="0 0 230 220" style="position:absolute;left:40px;top:150px;">
+    <path d="M210 20 L120 120" stroke="#e0dccd" stroke-width="1.5" stroke-dasharray="4 5"></path>
+    <g transform="translate(30,90) rotate(-18)">
+      <ellipse cx="26" cy="18" rx="26" ry="16" fill="#4f9aa0"></ellipse>
+      <path d="M50 18 L74 4 L74 32 Z" fill="#4f9aa0"></path>
+      <circle cx="12" cy="14" r="2.6" fill="#0d2438"></circle>
+      <path d="M0 18 Q26 4 52 12" fill="none" stroke="#7fc2c6" stroke-width="3" opacity="0.7"></path>
+    </g>
+  </svg>
+
+  <div style="position:absolute;right:26px;top:230px;width:34px;height:340px;border-radius:17px;background:rgba(255,255,255,0.1);overflow:hidden;">
+    <div style="position:absolute;left:0;right:0;top:0;height:33%;background:linear-gradient(180deg,#e2453a,#e08a3c);"></div>
+    <div style="position:absolute;left:0;right:0;top:33%;height:34%;background:#e0c93c;"></div>
+    <div style="position:absolute;left:0;right:0;top:67%;height:33%;background:#4f9a5c;"></div>
+    <div style="position:absolute;left:-6px;top:44%;width:46px;height:6px;background:#fbf3e7;border-radius:3px;box-shadow:0 0 8px rgba(0,0,0,0.4);"></div>
+  </div>
+  <div style="position:absolute;right:20px;top:582px;font-size:11px;color:#cfe0dc;text-align:center;width:46px;">장력</div>
+
+  <div style="position:absolute;left:0;right:0;bottom:150px;text-align:center;">
+    <div style="font-family:'Gowun Batang',serif;font-size:46px;font-weight:700;">62%</div>
+    <div style="font-size:12px;color:#a9c7c3;margin-top:2px;">릴 감기 진행률</div>
+  </div>
+
+  <div style="position:absolute;left:44px;right:44px;bottom:120px;height:8px;border-radius:4px;background:rgba(255,255,255,0.15);overflow:hidden;">
+    <div style="width:62%;height:100%;background:linear-gradient(90deg,#c98a46,#e08a3c);"></div>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;bottom:44px;display:flex;justify-content:center;">
+    <svg width="140" height="50" viewBox="0 0 140 50">
+      <rect x="10" y="18" width="120" height="14" rx="7" fill="#8a5a2e"></rect>
+      <circle cx="118" cy="25" r="16" fill="#a9713f" stroke="#5f3a1c" stroke-width="2"></circle>
+      <circle cx="118" cy="25" r="3" fill="#fbf3e7"></circle>
+    </svg>
+  </div>
+
+</div>
+</body>
+</html>
