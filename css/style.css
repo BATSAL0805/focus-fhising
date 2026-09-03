@@ -115,13 +115,19 @@ button {
   overscroll-behavior: contain;
 }
 
-.water-bg { position: absolute; left: 0; bottom: 0; }
-.water-svg { display: block; }
+.water-bg { position: absolute; left: 0; right: 0; bottom: 0; }
+/* SVG는 width/height 속성이 390px로 고정돼 있지만(viewBox와 동일 비율), 여기서 폭을
+   컨테이너(.water-bg, 화면 폭에 맞춰 늘어남)에 맞게 줄이고 height:auto로 비율을 유지시켜
+   390px보다 좁은 화면에서 가로 오버플로우가 생기지 않게 한다. */
+.water-svg { display: block; width: 100%; height: auto; }
 
 /* ===================== 1. 시작 화면 ===================== */
 .screen-start {
   background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy2) 32%, var(--teal-dark) 62%, var(--teal) 100%);
   overflow-y: auto;
+  /* overflow-y:auto만 지정하면 스펙상 overflow-x도 암묵적으로 auto가 되어 내부에 가로
+     스크롤이 생길 수 있다(390px 폭 물결 SVG 등). 명시적으로 막아 안전망을 이중화한다. */
+  overflow-x: hidden;
   /* 하단에 항상 떠 있는 .tabbar(82px)에 콘텐츠가 가려도 브라우저의 자동 스크롤(scrollIntoView)이
      이를 인지하고 넘겨서 스크롤하도록 스크롤 여백을 예약해둔다 */
   scroll-padding-bottom: 82px;
@@ -249,6 +255,9 @@ button {
 /* ===================== 2. 집중 대기 화면 ===================== */
 .screen-focus {
   background: linear-gradient(180deg, #0a1c2c 0%, #0f2b3d 22%, var(--teal3) 48%, #1f5c62 100%);
+  /* 390px 폭 물결 SVG 등이 뷰포트보다 좁은 화면에서 .phone까지 가로 오버플로우를
+     전파시키지 않도록 안전망을 둔다(근본 수정은 .water-svg의 width:100%). */
+  overflow-x: hidden;
 }
 .glow-spot {
   position: absolute; top: 60px; right: -30px; width: 160px; height: 160px; border-radius: 50%;
@@ -298,6 +307,7 @@ button {
 /* ===================== 3. 입질/챔질 화면 ===================== */
 .screen-bite {
   background: linear-gradient(180deg, #0a1826 0%, var(--navy-deep) 20%, #173a2e 55%, #1f5c62 100%);
+  overflow-x: hidden;
 }
 .bite-header { position: relative; padding: 64px 24px 0; text-align: center; }
 .bite-title { font-family: var(--font-serif); font-size: 34px; font-weight: 700; color: var(--text-amber2); text-shadow: 0 0 22px rgba(224, 138, 60, 0.55); }
@@ -362,6 +372,7 @@ button {
 /* ===================== 4. 릴링 화면 ===================== */
 .screen-reeling {
   background: linear-gradient(180deg, var(--navy-deep) 0%, var(--teal3) 30%, #1f5c62 65%, var(--teal-mid) 100%);
+  overflow-x: hidden;
 }
 .reeling-header { position: relative; padding: 54px 24px 0; text-align: center; }
 .reeling-title { font-family: var(--font-serif); font-size: 24px; font-weight: 700; }
