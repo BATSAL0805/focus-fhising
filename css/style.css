@@ -564,8 +564,17 @@ button {
     grid-template-rows: auto auto auto auto;
     align-content: center;
     row-gap: clamp(8px, 2vh, 20px); column-gap: 10px;
-    padding: 8px 22px 60px 26px;
+    padding-top: 8px;
+    padding-bottom: 60px;
     overflow-y: auto;
+    /* 태블릿 가로모드(폭 1024px 이상)처럼 화면이 넓어질수록 42%/58% 그리드가 그대로 늘어나면
+       다이얼(뷰포트 높이 기준 clamp라 폭에 비례해 커지지 않음)만 제자리라 콘텐츠가 화면
+       좌측에 쏠리고 우측에 큰 여백이 남는다. 배경(.screen-start의 그라디언트·물결)은 항상
+       화면 전체를 채워야 하므로 박스 자체 폭은 줄이지 않고, 좌우 padding만 넓은 화면에서
+       늘려 콘텐츠 폭을 900px 안팎으로 제한하고 가운데로 모은다. 812px(검증된 폰 가로) 이하에서는
+       max()가 기존 값을 그대로 선택해 이전 레이아웃과 동일하다. */
+    padding-right: max(22px, calc((100% - 900px) / 2 + 22px));
+    padding-left: max(26px, calc((100% - 900px) / 2 + 26px));
   }
   .screen-start .start-header { grid-column: 1; grid-row: 1; text-align: left; padding: 0; }
   .screen-start .brand-title { font-size: clamp(22px, 3.5vh, 28px); }
@@ -601,8 +610,14 @@ button {
     grid-auto-rows: min-content;
     align-content: center;
     row-gap: clamp(6px, 1.6vh, 16px); column-gap: 10px;
-    padding: 8px 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     overflow-y: auto;
+    /* 태블릿 가로모드에서 그리드 콘텐츠가 좌측에 쏠리지 않도록 좌우 padding만 넓혀 가운데로
+       모은다(시작 화면과 동일 근거). 박스 자체 폭은 그대로 두어 배경/찌 애니메이션은 계속
+       전체 폭을 채운다. */
+    padding-right: max(24px, calc((100% - 900px) / 2 + 24px));
+    padding-left: max(24px, calc((100% - 900px) / 2 + 24px));
   }
   .screen-focus .focus-badge-wrap { grid-column: 2; grid-row: 1; padding: 0; justify-content: flex-start; }
   .screen-focus .focus-caption { grid-column: 2; grid-row: 2; margin-top: 0; text-align: left; }
@@ -638,8 +653,14 @@ button {
     grid-auto-rows: min-content;
     align-content: center;
     row-gap: clamp(4px, 1.2vh, 14px);
-    padding: 8px 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     overflow-y: auto;
+    /* 태블릿 가로모드에서 그리드 콘텐츠가 좌측에 쏠리지 않도록 좌우 padding만 넓혀 가운데로
+       모은다(시작 화면과 동일 근거). 박스 자체 폭은 그대로 두어 배경/장력 게이지는 계속
+       전체 폭을 채운다. */
+    padding-right: max(24px, calc((100% - 900px) / 2 + 24px));
+    padding-left: max(24px, calc((100% - 900px) / 2 + 24px));
   }
   .screen-reeling .reeling-header { position: static; grid-column: 2; grid-row: 1; padding: 0; text-align: left; }
   .screen-reeling .reeling-title { font-size: clamp(19px, 3.5vh, 26px); }
