@@ -536,6 +536,13 @@ button {
 }
 .toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* 집중 대기 화면(.screen-focus)에서는 하단에 챔질 완료 버튼(.focus-finish-wrap, bottom:134px)과
+   컨트롤 버튼(.focus-controls, bottom:64px)이 가까이 붙어 있어 기본 토스트 위치(bottom:100px)와
+   겹친다("조금만 더 집중해보세요" 토스트가 방금 누른 챔질하러 가기 버튼과 겹치는 문제).
+   두 버튼 사이/위 공간이 부족하므로, 이 화면에서는 타이머·진행바 아래의 여유 공간으로
+   토스트 위치를 올려 겹치지 않게 한다. */
+.screen-focus.is-active ~ .toast { bottom: 220px; }
+
 /* ===================== 가로 모드 (기기 회전 시 자동 반응형) ===================== */
 @media (orientation: landscape) and (max-height: 920px) {
 
