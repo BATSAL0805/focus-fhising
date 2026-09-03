@@ -118,8 +118,11 @@ button {
 .water-bg { position: absolute; left: 0; right: 0; bottom: 0; }
 /* SVG는 width/height 속성이 390px로 고정돼 있지만(viewBox와 동일 비율), 여기서 폭을
    컨테이너(.water-bg, 화면 폭에 맞춰 늘어남)에 맞게 줄이고 height:auto로 비율을 유지시켜
-   390px보다 좁은 화면에서 가로 오버플로우가 생기지 않게 한다. */
-.water-svg { display: block; width: 100%; height: auto; }
+   390px보다 좁은 화면에서 가로 오버플로우가 생기지 않게 한다.
+   max-width:390px로 원래 크기 이상 커지는 건 막는다 — 안 막으면 가로모드처럼 컨테이너가
+   390px보다 훨씬 넓어질 때 배경이 화면 전체 높이를 뒤덮을 만큼 비정상적으로 커져서
+   그 위의 버튼들(일시정지/챔질하러 가기 등)의 클릭을 가로채는 회귀가 생긴다. */
+.water-svg { display: block; width: 100%; max-width: 390px; height: auto; }
 
 /* ===================== 1. 시작 화면 ===================== */
 .screen-start {
@@ -625,13 +628,20 @@ button {
     left: 17%; top: 50%; transform: translateX(-50%) translateY(-50%);
     width: clamp(96px, 17.5vh, 140px); height: clamp(96px, 17.5vh, 140px);
   }
-  .screen-focus .focus-timer-wrap { position: static; grid-column: 2; grid-row: 3; text-align: left; margin-top: 2px; }
+  /* position:static을 쓰면 z-index:auto인 position:absolute 형제(.water-bg 등)보다 항상
+     아래 페인트 층에 그려져 DOM 순서와 무관하게 그 아래에 깔려버린다(포인터 이벤트도
+     가로채임). position:relative는 grid 배치는 static과 동일하게 동작하면서 "positioned"
+     계층에 들어가 DOM 순서대로(=더 나중에 나오는 이 요소들이 위로) 올바르게 그려진다.
+     단, position:relative는 static과 달리 top/left/right/bottom(세로 기준 규칙에 이미
+     top:470px, bottom:64px 등으로 박혀있음)을 실제로 적용해버리므로, inset:auto로
+     전부 초기화해서 grid가 계산한 위치를 그대로 쓰게 한다. */
+  .screen-focus .focus-timer-wrap { position: relative; inset: auto; grid-column: 2; grid-row: 3; text-align: left; margin-top: 2px; }
   .screen-focus .focus-timer { font-size: clamp(38px, 7.2vh, 58px); }
   .screen-focus .focus-progress { margin: 8px 0 0; margin-left: 0; }
-  .screen-focus .focus-finish-wrap { position: static; grid-column: 2; grid-row: 4; justify-content: flex-start; margin-top: 6px; }
-  .screen-focus .focus-controls { position: static; grid-column: 2; grid-row: 5; justify-content: flex-start; gap: 12px; margin-top: 6px; }
+  .screen-focus .focus-finish-wrap { position: relative; inset: auto; grid-column: 2; grid-row: 4; justify-content: flex-start; margin-top: 6px; }
+  .screen-focus .focus-controls { position: relative; inset: auto; grid-column: 2; grid-row: 5; justify-content: flex-start; gap: 12px; margin-top: 6px; }
   .screen-focus .round-btn { width: clamp(44px, 6.7vh, 54px); height: clamp(44px, 6.7vh, 54px); }
-  .screen-focus .focus-warning { position: static; grid-column: 2; grid-row: 6; text-align: left; margin-top: 4px; font-size: 10px; }
+  .screen-focus .focus-warning { position: relative; inset: auto; grid-column: 2; grid-row: 6; text-align: left; margin-top: 4px; font-size: 10px; }
 
   /* ---- 3. 입질/챔질 화면: 좌(찌·물결) / 우(챔질 버튼) ---- */
   .screen-bite { padding-top: 4px; overflow-y: auto; }
@@ -662,7 +672,11 @@ button {
     padding-right: max(24px, calc((100% - 900px) / 2 + 24px));
     padding-left: max(24px, calc((100% - 900px) / 2 + 24px));
   }
-  .screen-reeling .reeling-header { position: static; grid-column: 2; grid-row: 1; padding: 0; text-align: left; }
+  /* position:relative로 두는 이유는 focus 화면 쪽 주석 참고(.water-bg 등 position:absolute
+     형제보다 페인트 순서가 밀려 포인터 이벤트를 못 받던 문제 방지). 세로 기준 규칙에 남아있는
+     bottom:150px/132px/120px/44px/4px 등이 relative에서는 실제로 적용되어 버리므로
+     inset:auto로 초기화해서 grid가 계산한 위치를 그대로 쓰게 한다. */
+  .screen-reeling .reeling-header { position: relative; inset: auto; grid-column: 2; grid-row: 1; padding: 0; text-align: left; }
   .screen-reeling .reeling-title { font-size: clamp(19px, 3.5vh, 26px); }
   .screen-reeling .reeling-sub { font-size: 11px; }
   .screen-reeling .reeling-fish-line {
@@ -673,12 +687,12 @@ button {
   }
   .screen-reeling .tension-gauge { right: 3%; top: 18%; height: 62%; width: clamp(20px, 3.75vh, 30px); }
   .screen-reeling .tension-label { display: none; }
-  .screen-reeling .reeling-progress-num { position: static; grid-column: 2; grid-row: 2; text-align: left; font-size: clamp(30px, 5.5vh, 44px); margin-top: 0; }
-  .screen-reeling .reeling-progress-caption { position: static; grid-column: 2; grid-row: 3; text-align: left; margin-top: 0; }
-  .screen-reeling .reeling-bar { position: static; grid-column: 2; grid-row: 4; left: auto; right: auto; margin-top: 8px; width: 100%; }
-  .screen-reeling .reel-handle-wrap { position: static; grid-column: 2; grid-row: 5; justify-content: flex-start; margin-top: 10px; }
+  .screen-reeling .reeling-progress-num { position: relative; inset: auto; grid-column: 2; grid-row: 2; text-align: left; font-size: clamp(30px, 5.5vh, 44px); margin-top: 0; }
+  .screen-reeling .reeling-progress-caption { position: relative; inset: auto; grid-column: 2; grid-row: 3; text-align: left; margin-top: 0; }
+  .screen-reeling .reeling-bar { position: relative; inset: auto; grid-column: 2; grid-row: 4; margin-top: 8px; width: 100%; }
+  .screen-reeling .reel-handle-wrap { position: relative; inset: auto; grid-column: 2; grid-row: 5; justify-content: flex-start; margin-top: 10px; }
   .screen-reeling .reel-handle svg { width: clamp(118px, 18.7vh, 150px); height: clamp(42px, 6.6vh, 53px); }
-  .screen-reeling .reeling-warning { position: static; grid-column: 2; grid-row: 6; text-align: left; margin-top: 4px; }
+  .screen-reeling .reeling-warning { position: relative; inset: auto; grid-column: 2; grid-row: 6; text-align: left; margin-top: 4px; }
 
   /* 세로 기준 크기의 파도 배경이 짧은 가로 화면에서 과도하게 덮이는 것을 완화 */
   .screen-start .water-bg,
